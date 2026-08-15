@@ -1,0 +1,8 @@
+node_modules/
+.env
+uploads/evidence/*
+!uploads/evidence/.gitkeep
+uploads/complaints/*
+!uploads/complaints/.gitkeep
+uploads/documents/*
+!uploads/documents/.gitkeep
