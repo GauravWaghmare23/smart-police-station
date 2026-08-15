@@ -24,6 +24,25 @@ export const getOfficerById = asyncHandler(async (req, res) => {
   return ApiResponse(res, 200, 'Officer profile retrieved successfully', { officer });
 });
 
+export const getOfficerFullProfile = asyncHandler(async (req, res) => {
+  const { getFullOfficerProfile } = await import('../services/officerProfile.service.js');
+  const { logAudit } = await import('../middleware/auditLog.middleware.js');
+
+  const profileData = await getFullOfficerProfile(req.params.id);
+
+  await logAudit({
+    userId: req.user._id,
+    userName: req.user.name,
+    userRole: req.user.role,
+    action: 'VIEW_OFFICER_PROFILE',
+    resourceType: 'Officer',
+    resourceId: req.params.id,
+    details: `Viewed detailed profile and case history of Officer ${profileData.officer?.userId?.name}`
+  });
+
+  return ApiResponse(res, 200, 'Full officer profile and analytics compiled successfully', { profile: profileData });
+});
+
 export const updateOfficer = asyncHandler(async (req, res) => {
   // Can modify rank, role, status
   const officer = await officerService.getOfficerDetails(req.params.id);

@@ -37,16 +37,18 @@ const navSections = [
   {
     title: 'Operations',
     items: [
-      { label: 'Complaints',  path: '/admin/complaints', icon: FileText },
-      { label: 'FIRs',        path: '/admin/firs',       icon: FileBadge },
-      { label: 'SOS Alerts',  path: '/admin/sos',        icon: Siren }
+      { label: 'Complaints',         path: '/admin/complaints', icon: FileText },
+      { label: 'FIRs',               path: '/admin/firs',       icon: FileBadge },
+      { label: 'SOS Alerts',         path: '/admin/sos',        icon: Siren },
+      { label: 'Suspect Directory',  path: '/admin/suspects',    icon: Users }
     ]
   },
   {
     title: 'Intelligence',
     items: [
       { label: 'Crime Hotspots',  path: '/admin/crime-intelligence', icon: Flame },
-      { label: 'Patrol Planner',  path: '/admin/patrol-planner',     icon: Route }
+      { label: 'Patrol Planner',  path: '/admin/patrol-planner',     icon: Route },
+      { label: 'Security Audit',  path: '/admin/audit-logs',        icon: Shield }
     ]
   },
   {

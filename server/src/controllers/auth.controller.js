@@ -50,3 +50,31 @@ export const getMe = asyncHandler(async (req, res) => {
   delete user.password;
   return ApiResponse(res, 200, 'User profile fetched successfully', { user });
 });
+
+export const getCitizenProfile = asyncHandler(async (req, res) => {
+  const { getCitizenProfile } = await import('../services/citizenProfile.service.js');
+  const { logAudit } = await import('../middleware/auditLog.middleware.js');
+
+  const targetUserId = req.params.id || req.user._id;
+
+  // Security Check: CITIZEN can only view their own profile
+  if (req.user.role === 'CITIZEN' && req.user._id.toString() !== targetUserId.toString()) {
+    throw new (await import('../utils/ApiError.js')).default(403, 'Forbidden. You can only view your own profile.');
+  }
+
+  const profileData = await getCitizenProfile(targetUserId);
+
+  if (req.user._id.toString() !== targetUserId.toString()) {
+    await logAudit({
+      userId: req.user._id,
+      userName: req.user.name,
+      userRole: req.user.role,
+      action: 'VIEW_CITIZEN_PROFILE',
+      resourceType: 'User',
+      resourceId: targetUserId,
+      details: `Viewed citizen profile and complaint history for ${profileData.citizen?.name}`
+    });
+  }
+
+  return ApiResponse(res, 200, 'Citizen profile compiled successfully', { profile: profileData });
+});

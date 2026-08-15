@@ -3,6 +3,7 @@ import { complaintApi } from '../../api/complaint.api';
 import { LoadingSpinner, ErrorState, StatusBadge, PageHeader, EmptyState } from '../../components/common/CommonUI';
 import { FileText, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { getSocket } from '../../socket/socket';
 
 const MyCases = () => {
   const [complaints, setComplaints] = useState([]);
@@ -26,6 +27,22 @@ const MyCases = () => {
 
   useEffect(() => {
     fetchCases();
+
+    const socket = getSocket();
+    if (socket) {
+      const handleUpdate = () => fetchCases();
+      socket.on('complaint:new', handleUpdate);
+      socket.on('complaint:updated', handleUpdate);
+      socket.on('suspect:created', handleUpdate);
+      socket.on('suspect:updated', handleUpdate);
+
+      return () => {
+        socket.off('complaint:new', handleUpdate);
+        socket.off('complaint:updated', handleUpdate);
+        socket.off('suspect:created', handleUpdate);
+        socket.off('suspect:updated', handleUpdate);
+      };
+    }
   }, []);
 
   if (loading) return <LoadingSpinner message="Fetching Assigned Case Files..." />;

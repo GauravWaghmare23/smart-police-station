@@ -24,11 +24,16 @@ import CrimeIntelligence from '../pages/admin/CrimeIntelligence';
 import PatrolPlanner from '../pages/admin/PatrolPlanner';
 import Announcements from '../pages/admin/Announcements';
 import Reports from '../pages/admin/Reports';
+import SuspectDirectory from '../pages/admin/SuspectDirectory';
+import CaseDossierView from '../pages/admin/CaseDossierView';
+import AuditLogs from '../pages/admin/AuditLogs';
+import CitizenProfilePage from '../pages/admin/CitizenProfilePage';
 
 // Police Pages
 import PoliceDashboard from '../pages/police/PoliceDashboard';
 import MyCases from '../pages/police/MyCases';
 import Patrols from '../pages/police/Patrols';
+import OfficerProfilePage from '../pages/police/OfficerProfilePage';
 
 const AppRoutes = () => {
   return (
@@ -47,7 +52,8 @@ const AppRoutes = () => {
                 <Route path="stations" element={<Stations />} />
                 <Route path="stations/:id" element={<StationDetails />} />
                 <Route path="officers" element={<Officers />} />
-                <Route path="officers/:id" element={<OfficerDetails />} />
+                <Route path="officers/:id" element={<OfficerProfilePage />} />
+                <Route path="citizens/:id" element={<CitizenProfilePage />} />
                 <Route path="complaints" element={<Complaints />} />
                 <Route path="complaints/:id" element={<ComplaintDetails />} />
                 <Route path="firs" element={<FIRs />} />
@@ -56,6 +62,9 @@ const AppRoutes = () => {
                 <Route path="patrol-planner" element={<PatrolPlanner />} />
                 <Route path="announcements" element={<Announcements />} />
                 <Route path="reports" element={<Reports />} />
+                <Route path="suspects" element={<SuspectDirectory />} />
+                <Route path="cases/dossier/:id" element={<CaseDossierView />} />
+                <Route path="audit-logs" element={<AuditLogs />} />
                 <Route path="*" element={<Navigate to="/admin/dashboard" replace />} />
               </Routes>
             </AdminLayout>
@@ -68,13 +77,18 @@ const AppRoutes = () => {
             <PoliceLayout>
               <Routes>
                 <Route path="dashboard" element={<PoliceDashboard />} />
+                <Route path="profile" element={<OfficerProfilePage />} />
                 <Route path="cases" element={<MyCases />} />
                 <Route path="cases/:id" element={<ComplaintDetails />} />
                 <Route path="firs" element={<FIRs />} />
                 <Route path="sos" element={<SOSAlerts />} />
                 <Route path="officers" element={<Officers />} />
+                <Route path="officers/:id" element={<OfficerProfilePage />} />
+                <Route path="citizens/:id" element={<CitizenProfilePage />} />
                 <Route path="patrols" element={<Patrols />} />
                 <Route path="announcements" element={<Announcements />} />
+                <Route path="suspects" element={<SuspectDirectory />} />
+                <Route path="cases/dossier/:id" element={<CaseDossierView />} />
                 <Route path="*" element={<Navigate to="/police/dashboard" replace />} />
               </Routes>
             </PoliceLayout>

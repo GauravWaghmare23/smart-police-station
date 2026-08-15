@@ -75,6 +75,22 @@ const complaintSchema = new mongoose.Schema(
       type: String,
       enum: Object.values(COMPLAINT_PRIORITY),
       default: COMPLAINT_PRIORITY.MEDIUM
+    },
+    caseUpdates: [
+      {
+        note: { type: String, required: true },
+        updateType: { type: String, enum: ['GENERAL', 'INVESTIGATION', 'EVIDENCE', 'SUSPECT', 'COURT', 'INTERNAL_NOTE'], default: 'GENERAL' },
+        isCitizenVisible: { type: Boolean, default: true },
+        addedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+        createdAt: { type: Date, default: Date.now }
+      }
+    ],
+    resolutionDetails: {
+      summary: String,
+      suspectOutcome: String,
+      courtOutcome: String,
+      resolvedAt: Date,
+      resolvedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
     }
   },
   {

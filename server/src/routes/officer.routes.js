@@ -17,6 +17,7 @@ router.post(
 
 router.get('/', officerController.getOfficers);
 router.get('/:id', validateObjectId('id'), officerController.getOfficerById);
+router.get('/:id/full-profile', validateObjectId('id'), officerController.getOfficerFullProfile);
 
 router.patch(
   '/:id',

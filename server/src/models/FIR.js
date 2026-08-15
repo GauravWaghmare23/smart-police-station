@@ -1,6 +1,13 @@
 import mongoose from 'mongoose';
 import { CRIME_TYPES, FIR_STATUS } from '../utils/constants.js';
 
+const timelineEventSchema = new mongoose.Schema({
+  stage: { type: String, required: true }, // e.g., 'FIR Registered', 'Evidence Collected', 'Suspect Interrogated', 'Chargesheet Filed', 'Court Outcome'
+  description: { type: String, required: true },
+  updatedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  timestamp: { type: Date, default: Date.now }
+});
+
 const firSchema = new mongoose.Schema(
   {
     firNumber: {
@@ -36,6 +43,46 @@ const firSchema = new mongoose.Schema(
     description: {
       type: String,
       required: [true, 'Description is required']
+    },
+    suspectIds: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Suspect'
+      }
+    ],
+    legalSections: [
+      {
+        act: { type: String, default: 'BNS' }, // Bharatiya Nyaya Sanhita / IPC
+        section: String,
+        title: String
+      }
+    ],
+    evidenceList: [
+      {
+        title: String,
+        type: { type: String }, // 'PHYSICAL', 'DIGITAL', 'FORENSIC', 'TESTIMONY'
+        description: String,
+        filename: String,
+        path: String,
+        collectedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        collectedAt: { type: Date, default: Date.now }
+      }
+    ],
+    investigationTimeline: [timelineEventSchema],
+    courtOutcome: {
+      courtName: String,
+      judge: String,
+      caseNumber: String,
+      status: { type: String, enum: ['PENDING_TRIAL', 'IN_HEARING', 'CONVICTED', 'ACQUITTED', 'DISCHARGED', 'NOT_SUBMITTED'], default: 'NOT_SUBMITTED' },
+      verdictDate: Date,
+      notes: String
+    },
+    resolutionDetails: {
+      summary: String,
+      suspectOutcome: String,
+      courtOutcome: String,
+      resolvedAt: Date,
+      resolvedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
     },
     status: {
       type: String,

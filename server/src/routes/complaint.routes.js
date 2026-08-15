@@ -43,4 +43,18 @@ router.post(
   complaintController.uploadEvidence
 );
 
+router.post(
+  '/:id/updates',
+  authorizeRoles(ROLES.CONTROL_ROOM_ADMIN, ROLES.STATION_HEAD, ROLES.INVESTIGATING_OFFICER, ROLES.FIELD_OFFICER),
+  validateObjectId('id'),
+  complaintController.addCaseUpdate
+);
+
+router.post(
+  '/:id/resolve',
+  authorizeRoles(ROLES.CONTROL_ROOM_ADMIN, ROLES.STATION_HEAD, ROLES.INVESTIGATING_OFFICER),
+  validateObjectId('id'),
+  complaintController.resolveCase
+);
+
 export default router;

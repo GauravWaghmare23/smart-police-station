@@ -28,5 +28,9 @@ export const officerApi = {
   updateLocation: async (userId, latitude, longitude) => {
     const res = await api.patch(`/officers/${userId}/location`, { latitude, longitude });
     return res.data;
+  },
+  getFullProfile: async (id) => {
+    const res = await api.get(`/officers/${id}/full-profile`);
+    return res.data;
   }
 };

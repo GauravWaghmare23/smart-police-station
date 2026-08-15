@@ -28,5 +28,13 @@ export const complaintApi = {
       }
     });
     return res.data;
+  },
+  addUpdate: async (id, data) => {
+    const res = await api.post(`/complaints/${id}/updates`, data);
+    return res.data;
+  },
+  resolveCase: async (id, data) => {
+    const res = await api.post(`/complaints/${id}/resolve`, data);
+    return res.data;
   }
 };

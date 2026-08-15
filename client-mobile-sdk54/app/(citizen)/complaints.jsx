@@ -504,14 +504,15 @@ export default function ComplaintsScreen() {
                 </View>
 
                 {[
-                  ['Complaint ID', selected._id],
+                  ['Complaint ID', selected.complaintId || selected._id],
                   ['Crime Category', selected.crimeType || selected.category],
-                  ['Incident Address', selected.address],
+                  ['Incident Address', selected.address || selected.location?.address],
                   ['Submitted Date', new Date(selected.createdAt).toLocaleString()],
-                  ['Priority', selected.priority || 'NORMAL'],
-                  ['Assigned Station', selected.policeStationId?.name || selected.station?.name || 'Calculated by Backend'],
-                  ['Assigned Officer', selected.assignedOfficerId?.name ? `${selected.assignedOfficerId.name} (${selected.assignedOfficerId.phone || 'On Duty'})` : 'Officer Not Assigned Yet'],
-                  ['FIR Status', selected.firId ? `Registered (#${selected.firId.firNumber || selected.firId})` : 'No FIR filed yet'],
+                  ['Priority Level', selected.priority || 'MEDIUM'],
+                  ['Jurisdiction Station', selected.policeStationId?.name || selected.station?.name || 'Calculated by Backend'],
+                  ['Assigned Officer', selected.assignedOfficerId?.name ? `${selected.assignedOfficerId.name} ${selected.assignedOfficerId.rank ? `(${selected.assignedOfficerId.rank})` : ''}` : 'Officer Assignment Pending'],
+                  ['Station Helpline', selected.policeStationId?.phone || '100 / 112 Emergency'],
+                  ['FIR Status', selected.firId ? `Registered (#${selected.firId.firNumber || selected.firId})` : 'Under Preliminary Assessment'],
                   ['Latest Status Update', selected.updatedAt ? new Date(selected.updatedAt).toLocaleString() : 'Registered'],
                 ].map(([label, val]) => (
                   <View key={label} style={styles.detailRow}>

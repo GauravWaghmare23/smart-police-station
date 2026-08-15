@@ -22,5 +22,7 @@ router.post('/logout', authController.logout);
 router.post('/refresh', authController.refresh);
 
 router.get('/me', authenticate, authController.getMe);
+router.get('/profile', authenticate, authController.getCitizenProfile);
+router.get('/citizens/:id/profile', authenticate, authController.getCitizenProfile);
 
 export default router;

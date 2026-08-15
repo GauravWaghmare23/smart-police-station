@@ -22,6 +22,10 @@ import crimeRoutes from './routes/crime.routes.js';
 import patrolRoutes from './routes/patrol.routes.js';
 import notificationRoutes from './routes/notification.routes.js';
 import dashboardRoutes from './routes/dashboard.routes.js';
+import suspectRoutes from './routes/suspect.routes.js';
+import caseDossierRoutes from './routes/caseDossier.routes.js';
+import aiAssistantRoutes from './routes/aiAssistant.routes.js';
+import auditLogRoutes from './routes/auditLog.routes.js';
 
 const app = express();
 
@@ -73,6 +77,10 @@ app.use('/api/crime', crimeRoutes);
 app.use('/api/patrols', patrolRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/suspects', suspectRoutes);
+app.use('/api/cases', caseDossierRoutes);
+app.use('/api/ai', aiAssistantRoutes);
+app.use('/api/audit-logs', auditLogRoutes);
 
 // Error handlers
 app.use(notFoundMiddleware);

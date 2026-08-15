@@ -82,3 +82,35 @@ export const uploadEvidence = asyncHandler(async (req, res) => {
   const complaint = await complaintService.addEvidenceToComplaint(req.params.id, fileData);
   return ApiResponse(res, 200, 'Evidence uploaded successfully', { complaint });
 });
+
+export const addCaseUpdate = asyncHandler(async (req, res) => {
+  const { note, updateType, isCitizenVisible } = req.body;
+  if (!note || !note.trim()) {
+    throw new ApiError(400, 'Update note content is required');
+  }
+
+  const complaint = await complaintService.addCaseUpdate(req.params.id, {
+    note: note.trim(),
+    updateType,
+    isCitizenVisible,
+    addedBy: req.user._id
+  });
+
+  return ApiResponse(res, 201, 'Case update added successfully', { complaint });
+});
+
+export const resolveCase = asyncHandler(async (req, res) => {
+  const { summary, suspectOutcome, courtOutcome } = req.body;
+  if (!summary || !summary.trim()) {
+    throw new ApiError(400, 'Resolution summary is required before closing a case');
+  }
+
+  const complaint = await complaintService.resolveWithDetails(req.params.id, {
+    summary: summary.trim(),
+    suspectOutcome,
+    courtOutcome,
+    resolvedBy: req.user._id
+  });
+
+  return ApiResponse(res, 200, 'Case resolved successfully with final summary', { complaint });
+});

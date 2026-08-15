@@ -47,11 +47,17 @@ const PoliceDashboard = () => {
       socket.on('sos:new', handleRealtime);
       socket.on('sos:updated', handleRealtime);
       socket.on('complaint:new', handleRealtime);
+      socket.on('complaint:updated', handleRealtime);
+      socket.on('suspect:created', handleRealtime);
+      socket.on('suspect:updated', handleRealtime);
 
       return () => {
         socket.off('sos:new', handleRealtime);
         socket.off('sos:updated', handleRealtime);
         socket.off('complaint:new', handleRealtime);
+        socket.off('complaint:updated', handleRealtime);
+        socket.off('suspect:created', handleRealtime);
+        socket.off('suspect:updated', handleRealtime);
       };
     }
   }, [user.role]);
